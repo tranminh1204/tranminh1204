@@ -39,8 +39,10 @@ run_test() {
   echo "$(timestamp) - Running network test..." >> "$OUT_FILE"
   if command -v speedtest >/dev/null 2>&1; then
     if [ "$OUT_JSON" -eq 1 ]; then
-      speedtest --format=json >> "$OUT_FILE" 2>&1
+      # Ookla Speedtest CLI uses --json for JSON output
+      speedtest --json >> "$OUT_FILE" 2>&1
     else
+      # Run with interactive-friendly flags; accept license/gdpr where supported
       speedtest --accept-license --accept-gdpr >> "$OUT_FILE" 2>&1
     fi
   else
